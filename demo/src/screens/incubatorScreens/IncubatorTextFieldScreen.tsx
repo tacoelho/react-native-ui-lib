@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import {TextInput, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
-import {Assets, Colors, Spacings, Typography, View, Text, Button, Keyboard, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
+import {Assets, Colors, Spacings, View, Text, Button, Keyboard, Incubator} from 'react-native-ui-lib'; //eslint-disable-line
 const {TextField} = Incubator;
 const {KeyboardAwareInsetsView} = Keyboard;
 
