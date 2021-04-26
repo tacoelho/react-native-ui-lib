@@ -8,9 +8,7 @@ import View from '../../components/view';
 import Button, {ButtonProps} from '../../components/button';
 import Text from '../../components/text';
 import Image from '../../components/image';
-import {triggerHaptic, HapticMethods} from '../../../src/services/HapticService';
-
-
+// import {triggerHaptic, HapticMethods} from '../../services/HapticService';
 // import Loader from '../Loader';
 // import withConnectionState, {WithConnectionStateProps} from '../WithConnectionState';
 // import TabletView from '../TabletView';
@@ -77,6 +75,10 @@ export interface ToastProps {
    * depends on the Toast's position, and animate with it when the Toast is made visible or dismissed
    */
   renderAttachment?: () => JSX.Element;
+  /**
+   * render a custom loader component instead of the default when passing showLoader
+   */
+  customLoader: () => JSX.Element;
   /**
    * The preset look for GENERAL, SUCCESS and FAILURE (Toast.presets.xxx)
    */
@@ -196,7 +198,7 @@ class Toast extends PureBaseComponent<Props, State> {
     }).start(this.onAnimationEnd);
 
     if (preset === Toast.presets.FAILURE && show) {
-      triggerHaptic(HapticMethods.impactMedium);
+      // triggerHaptic(HapticMethods.impactMedium);
     }
 
     this.setAnimationStatus(true);
@@ -327,13 +329,18 @@ class Toast extends PureBaseComponent<Props, State> {
   };
 
   renderRightElement = () => {
-    const {showLoader, action, testID} = this.props;
+    const {showLoader, action, testID, customLoader} = this.props;
 
     // NOTE: order does matter
     if (showLoader) {
-      return <View style={{height: 20, width: 20, backgroundColor: 'red'}}/>
-      // const loaderColors = [Colors.rgba(Colors.white, 0.3), Colors.rgba(Colors.grey30, 0.7)];
-      // return <Loader size={Loader.sizes.SMALL} color={loaderColors} style={styles.loader} testID={`${testID}-loader`}/>;
+      if (customLoader) {
+        return (
+          <View center marginR-20>
+            {customLoader()}
+          </View>
+        );
+      }
+      return <View style={{height: 20, width: 20, backgroundColor: 'red'}}/>;
     }
 
     if (action) {
@@ -405,7 +412,7 @@ class Toast extends PureBaseComponent<Props, State> {
     });
 
     return (
-      // <TabletView
+      //TabletView
       <View
         animated
         testID={testID}
@@ -422,7 +429,6 @@ class Toast extends PureBaseComponent<Props, State> {
           {this.renderToastContent()}
         </AnimatedView>
         {isTop && !!toastHeight && this.renderAttachmentContent()}
-      {/* </TabletView> */}
       </View>
     );
   }
