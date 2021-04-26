@@ -412,7 +412,6 @@ class Toast extends PureBaseComponent<Props, State> {
     });
 
     return (
-      //TabletView
       <View
         animated
         testID={testID}
