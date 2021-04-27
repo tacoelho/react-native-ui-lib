@@ -9,16 +9,14 @@ const COLORS = {
   GREEN: {name: 'Green', color: Colors.green20}
 };
 
-export default class RadioButtonScreen extends Component {
+export default class RadioButtonScreen extends Component<Props, State> {
   static colors = COLORS;
-  constructor(props) {
-    super(props);
-    this.state = {
-      color: undefined,
-      messageType: undefined,
-      disabledSelectedValue: true
-    };
-  }
+
+  state = {
+    color: undefined,
+    messageType: undefined,
+    disabledSelectedValue: true
+  };
 
   renderRadioButton(value, text, props) {
     return (
